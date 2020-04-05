@@ -1,0 +1,64 @@
+setcps 0.5
+
+d1 $ sound (every 4 (slow 4)
+"[ bd:2*3 bd:1 sd:3 bd*3 ] [bd*2 sd:1]")
+# gain "0.9"
+
+d1 silence
+unsolo 1
+
+d4 $ sound "arpy(3,8)"
+# n (every 4 (* 3) "[0 2,0 7]")
+# crush "5"
+# speed "0.4"
+
+d4 silence
+
+d2 $ sound "[hh hh hh hh]*4"
+ # gain "[1.1 0.75 0.75 0.75]*4"
+
+d2 silence
+
+d3 $ sound "bass1:5*2 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5"
+# gain "1"
+# speed "1"
+
+d3 silence
+
+d3 silence
+unsolo 3
+hush
+
+d10 $ sound "[bd [sn sn]*2]/2 [bd [sn bd]/2]*2"
+
+let pats =
+      [
+        ("a", stack [n "c4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
+                     n "[c3,g4,c4]" # s "superpiano"# gain "0.7"
+                    ]
+        ),
+        ("b", stack [n "d4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
+                     n "[d3,a4,d4]" # s "superpiano"# gain "0.7"
+                    ]
+        ),
+        ("c", stack [n "f4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
+                     n "[f4,c5,f4]" # s "superpiano"# gain "0.7"
+                    ]
+        )
+      ]
+    fx = [("reverse", (# (room 0.8 # sz 0.99 # orbit 1))),
+          ("faster", fast 2)
+         ]
+in
+d10 $ ur 12 "a b:reverb c:faster" pats fx
+
+d10 silence
+
+let pats = [("drums", s "drum clap*2"),
+            ("melody", s "arpy:2 arpy:3 arpy:5"),
+            ("craziness", s "clap:4*8" # speed ( sine + 0.5))
+           ]
+    fx = [("higher", (# speed 2))]
+in
+d12 $ ur 8 "[drums, melody] [drums,craziness,melody] melody:higher" pats fx
+d12 silence

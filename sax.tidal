@@ -1,0 +1,27 @@
+setcps 0.5
+
+d3 $ sound "[hh hh hh hh]*4" # gain "[1.1 0.75 0.75 0.75]*4"
+
+d2 $ sound "sax:0" # cut "1"
+
+d4 $ jux rev $ n (off 0.125 (|+ 7)  "<c*2 a(3,8) f(3,8,2) e*2>")
+  # sound "supermandolin"
+  # legato 2
+
+
+d4 $ chunk 4 (|- note 5) $ jux rev $
+  arp "<pinkyup down thumbup up>" $ n "<c'maj'4 e4'min'8 f4'maj'4>"
+  # sound "superpiano"
+  # sustain 2 # room 0.3 # sz 0.9 # gain "0.6"
+
+d4 $ off 0.25 (# vowel "<a o i>")
+  $ juxBy 0.4 rev $ every 2 (rot "<1 3 2>") $ n "0 <0 4> [2 0] [2 3]" # sound "feel" # speed "1.75 2"
+
+d3 $ juxBy 0.5 rev $ chunk 4 ((+ speed (1 + sine)) . ply 8) $ note "3(3,8)" # sound "bass"
+  # speed "<2 4>"
+  # legato 1
+
+d3 silence
+d4 silence
+
+hush

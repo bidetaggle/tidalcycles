@@ -2,7 +2,9 @@ setcps 0.5
 
 d1 $ sound (every 4 (slow 4)
 "[ bd:2*3 bd:1 sd:3 bd*3 ] [bd*2 sd:1]")
-# gain "0.9"
+# room "1"
+
+d3 $ sound "drum*4" # room "1 1 1 1" # size 0.1 # orbit 1
 
 d1 silence
 unsolo 1
@@ -14,14 +16,20 @@ d4 $ sound "arpy(3,8)"
 
 d4 silence
 
-d2 $ sound "[hh hh hh hh]*4"
- # gain "[1.1 0.75 0.75 0.75]*4"
+d2 $ sound "[hh hh hh hh]*4" # gain "[1.1 0.75 0.75 0.75]*4"
 
+unsolo 2
 d2 silence
 
-d3 $ sound "bass1:5*2 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5 bass1:5"
-# gain "1"
+d4 $ sound "bass1:5 bass1:5 bass1:5 bass3:5 bass1:6 bass1:5 bass1:5 bass1:5"
+# pan "0 1 0 1 0 1 0 1 0"
 # speed "1"
+
+# room 0.6 # size 1
+
+unsolo 4
+
+d4 silence
 
 d3 silence
 
@@ -29,20 +37,25 @@ d3 silence
 unsolo 3
 hush
 
+d5 $ n "c4 c5 g4 f4 f5 g4 e5 g4" # s "superchip"
+d5 silence
+
+d1 $ n (slow 2 $ fmap (*7) $ run 8) # s "supergong" # decay "[1 0.2]/4" # voice "[0.5 0]/8"
+
 d10 $ sound "[bd [sn sn]*2]/2 [bd [sn bd]/2]*2"
 
 let pats =
       [
-        ("a", stack [n "c4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
-                     n "[c3,g4,c4]" # s "superpiano"# gain "0.7"
+        ("a", stack [n "c4 c5 g4 f4 f5 g4 e5 g4" # s "supertron" # cut "1" # gain "0.7"  # slide "-0.5" # sustain "1 1 2 1",
+                     n "[c3,g4,c4]" # s "supersnare"# gain "1"
                     ]
         ),
-        ("b", stack [n "d4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
-                     n "[d3,a4,d4]" # s "superpiano"# gain "0.7"
+        ("b", stack [n "d4 c5 g4 f4 f5 g4 e5 g4" # s "supermandolin" # gain "0.7" # sustain "1 0.25 2 1",
+                     n "[d3,a4,d4]" # s "supermandolin"# gain "1"  # sustain "0.5 1 2 5"
                     ]
         ),
-        ("c", stack [n "f4 c5 g4 f4 f5 g4 e5 g4" # s "superpiano" # gain "0.7",
-                     n "[f4,c5,f4]" # s "superpiano"# gain "0.7"
+        ("c", stack [n "f4 c5 g4 f4 f5 g4 e5 g4" # s "supermandolin" # gain "0.7" # sustain "1 0.25 2 1",
+                     n "[f4,c5,f4]" # s "supermandolin"# gain "1" # sustain "1 0.25 2 1"
                     ]
         )
       ]
@@ -50,7 +63,7 @@ let pats =
           ("faster", fast 2)
          ]
 in
-d10 $ ur 12 "a b:reverb c:faster" pats fx
+d10 $ ur 12 "a b:reverb c:faster" pats fx # gain "1"
 
 d10 silence
 
@@ -61,4 +74,5 @@ let pats = [("drums", s "drum clap*2"),
     fx = [("higher", (# speed 2))]
 in
 d12 $ ur 8 "[drums, melody] [drums,craziness,melody] melody:higher" pats fx
+
 d12 silence

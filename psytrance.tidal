@@ -1,0 +1,12 @@
+setcps 0.5
+
+d1 $ sound "drum*4" # room "1 1 1 1" # size 0.1
+
+d2 $ sound "[hh hh hh hh]*4" # gain "[1.1 0.75 0.75 0.75]*4"
+
+d3 $ sound "bass1:5 bass1:5 bass1:5 bass3:5 bass1:6 bass1:5 bass1:5 bass1:5"
+# pan "0 1 0 1 0 1 0 1 0"
+
+d4 silence
+
+hush
